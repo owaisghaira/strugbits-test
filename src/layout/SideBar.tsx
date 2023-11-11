@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen  , toggleSidebar}) => {
   return (
     <aside className={`w-80 md:w-[24vw] bg-[#015249] opacity-100 rounded-r-[20px] transition-all duration-300 ${isSidebarOpen ? '' : 'hidden'} md:block`}>
       <div onClick={toggleSidebar} className='absolute lg:hidden right-24 top-4'>
-        <CloseIcon />
+        <CloseIcon  />
       </div>
       <div className="pt-12 px-2 flex justify-center">
         <img src={Logo} alt="logo" />

@@ -1,5 +1,7 @@
 import customersSlice from "./customerSlice";
 
-export default{
-  customer : customersSlice
-}
+const myExports = {
+  customer: customersSlice,
+};
+
+export default myExports;

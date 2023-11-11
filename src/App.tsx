@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { doGetCustomers } from './store/slices/customerSlice';
 import { useAppDispatch } from './hooks/reduxHooks';
@@ -15,12 +15,12 @@ function App() {
   }, [dispatch])
 
   return (
-    <>
+    <div className='font-lato'>
       <Layout>
         <Customers />
       </Layout>
       <ToastContainer />
-    </>
+    </div>
   );
 }
 
