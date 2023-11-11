@@ -4,7 +4,12 @@ module.exports = {
     './public/index.html',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'lato': ['Lato', 'sans'],
+        'recoleta': ['Recoleta', 'sans'],
+      },
+    },
   },
   plugins: [],
 }

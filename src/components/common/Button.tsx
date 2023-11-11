@@ -8,7 +8,7 @@ interface Props {
 const Button: React.FC<Props> = ({ btnText, onClick, classes, icon }) => {
   return (
     <button onClick={onClick} className={classes}>
-      <span className='pr-4'>{icon}</span>
+      {icon && <span className='pr-4'>{icon}</span>}
       {btnText}</button>
   )
 }

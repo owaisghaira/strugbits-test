@@ -2,5 +2,32 @@
   border-collapse: separate;
   border-spacing: 0 30px;
   border-radius: 10px;
+}
+.custom-file-input {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
 
+.custom-file-input span {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.custom-file-input input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-file-input input:focus + span {
+  outline: 2px solid transparent;
+}
+
+.custom-file-input input::before {
+  content: 'Select File: ';
 }

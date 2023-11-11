@@ -26,6 +26,7 @@ const CustomerTable = () => {
       }
       setIsModalOpen(false);
       dispatch(updateCustomer(formData))
+      setCustomer({});
       toast.success('Customer Updated Successfully.');
     } else {
       let maxId = 0;
@@ -39,6 +40,7 @@ const CustomerTable = () => {
         formData.avatar = URL.createObjectURL(formData.avatar);
       }
       setIsModalOpen(false);
+      setCustomer({});
       dispatch(addCustomer(formData))
       toast.success('Customer Added Successfully.');
     }
@@ -64,6 +66,7 @@ const CustomerTable = () => {
       return <FaSort className="inline-block m-1 pb-[2px] text-gray-400" />;
     }
   };
+
   const sortedCustomerData = [...customer_data].sort((a, b) => {
     const compareValue = a[sortColumn] > b[sortColumn] ? 1 : -1;
     return sortDirection === 'asc' ? compareValue : -compareValue;
@@ -73,81 +76,79 @@ const CustomerTable = () => {
     dispatch(doGetCustomers());
   }, [dispatch])
 
-  { true && <Loader /> }
   return (
     <>
-      <div className='sm:flex-none flex items-center justify-center md:justify-start mt-4 md:m-0'>
-        <Button
-          btnText='Add New Customer'
-          onClick={() => setIsModalOpen(true)}
-          icon={<PlusIcon />}
-          classes='bg-gradient-to-r flex items-center uppercase justify-between from-[#57BC90] to-[#004B40] rounded-[10px] text-white h-[70px] px-9 text-[20px] font-semibold rounded md:mr-6'
-        ></Button>
-      </div>
-      <div className='overflow-x-auto'>
-        <table className="w-[100vw] md:max-w-full md:mt-12 spacing-table text-[#015249] ">
-          <thead className="text-[22px] bg-[#C5E3D5]">
-            <tr className="text-left">
-              <th
-                scope="col"
-                className="py-4 w-[100px]"
-              >
-              </th>
-              <th
-                scope="col"
-                className="py-4 w-[100px] whitespace-nowrap"
-                onClick={() => handleSortClick('id')}
-              >
-                Customer ID
-                {getSortIcon('id')}
-              </th>
-              <th
-                scope="col"
-                className="py-4 w-[100px] whitespace-nowrap"
-                onClick={() => handleSortClick('name')}
-              >
-                Customer Name
-                {getSortIcon('name')}
-              </th>
-              <th
-                scope="col"
-                className="py-4 w-[150px]"
-                onClick={() => handleSortClick('email')}
-              >
-                Email
-                {getSortIcon('email')}
-              </th>
-              <th
-                scope="col"
-                className="py-4 w-[250px]"
-              >
-              </th>
-            </tr>
-          </thead>
-          <tbody className=''>
-            {sortedCustomerData?.map((costomerItem: ICustomer, index) => (
-              <CustomerTableRow
-                key={index}
-                costomerItem={costomerItem}
-                setCustomer={setCustomer}
-                setIsModalOpen={setIsModalOpen}
-                onSubmit={handleFormSubmit}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <Modal isOpen={isModalOpen} onClose={() => {
-        setCustomer({});
-        setIsModalOpen(false)
-      }}>
-        <ModalForm
-          onSubmit={handleFormSubmit}
-          onCancel={() => setIsModalOpen(false)}
-          customer={customer}
-          setCustomer={setCustomer}
-        />
-      </Modal>
+      {loading ? <Loader /> :
+        <>
+          <div className='sm:flex-none flex items-center justify-center md:justify-start mt-4 md:m-0'>
+            <Button
+              btnText='Add New Customer'
+              onClick={() => setIsModalOpen(true)}
+              icon={<PlusIcon />}
+              classes='bg-gradient-to-r flex items-center uppercase justify-between from-[#57BC90] to-[#004B40] rounded-[10px] text-white h-[70px] px-9 text-[20px] font-semibold rounded md:mr-6'
+            ></Button>
+          </div>
+          <div className='overflow-x-auto'>
+            <table className="w-[100vw] md:max-w-full md:mt-12 spacing-table text-[#015249] ">
+              <thead className="text-[22px] bg-[#C5E3D5]">
+                <tr className="text-left">
+                  <th
+                    scope="col"
+                    className="py-4 w-[100px]"
+                  >
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-4 w-[100px] whitespace-nowrap"
+                    onClick={() => handleSortClick('id')}
+                  >
+                    Customer ID
+                    {getSortIcon('id')}
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-4 w-[100px] whitespace-nowrap"
+                    onClick={() => handleSortClick('name')}
+                  >
+                    Customer Name
+                    {getSortIcon('name')}
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-4 w-[150px]"
+                    onClick={() => handleSortClick('email')}
+                  >
+                    Email
+                    {getSortIcon('email')}
+                  </th>
+                  <th
+                    scope="col"
+                    className="py-4 w-[250px]"
+                  >
+                  </th>
+                </tr>
+              </thead>
+              <tbody className=''>
+                {sortedCustomerData?.map((costomerItem: ICustomer, index: number) => (
+                  <CustomerTableRow
+                    key={index}
+                    costomerItem={costomerItem}
+                    onSubmit={handleFormSubmit}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <ModalForm
+              onSubmit={handleFormSubmit}
+              onCancel={() => setIsModalOpen(false)}
+              customer={customer}
+              setCustomer={setCustomer}
+            />
+          </Modal>
+        </>
+      }
     </>
   )
 }

@@ -3,19 +3,28 @@ import { ICustomer } from '../../../types/customer'
 import Button from '../../common/Button'
 import ModalForm from '../../common/Form'
 import Modal from '../../common/Modal'
-import { deleteCustomer } from '../../../store/slices/customerSlice'
 import { useAppDispatch } from '../../../hooks/reduxHooks'
+import { deleteCustomer } from '../../../store/slices/customerSlice'
+import { toast } from 'react-toastify';
+import DeleteModal from '../../common/DeleteModal'
 
 interface Props {
-  costomerItem: ICustomer[]
+  costomerItem: ICustomer;
+  onSubmit: (e: any) => void
 }
 
-const CustomerTableRow = ({ costomerItem, onSubmit }: any) => {
+const CustomerTableRow: React.FC<Props> = ({ costomerItem, onSubmit }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [customer, setCustomer] = useState({})
+  const [isDeleteModal, setIsDeleteModal] = useState(false)
+  const [editCustomer, setEditCustomer] = useState({})
   const dispatch = useAppDispatch()
 
+  const handleDelete = () => {
+    dispatch(deleteCustomer(costomerItem.id ?? 0))
+    setIsDeleteModal(false)
+    toast.success('Customer Deleted Successfully.')
+  }
   return (
     <>
       <tr className='border rounded-lg text-lg bg-white' >
@@ -23,7 +32,7 @@ const CustomerTableRow = ({ costomerItem, onSubmit }: any) => {
           <img width={109} height={105}
             src={costomerItem.avatar}
             className='rounded-[10px] max-w-none'
-            alt="customer-logo"
+            alt="icon"
           />
         </td>
         <td>{costomerItem.id}</td>
@@ -34,15 +43,16 @@ const CustomerTableRow = ({ costomerItem, onSubmit }: any) => {
             <Button
               btnText='Edit'
               onClick={() => {
-                setCustomer(costomerItem)
+                setEditCustomer(costomerItem)
                 setIsModalOpen(true)
               }}
-              classes='bg-[#B0E1B7] text-[#008212] h-[33px] font-semibold w-[106px] rounded mr-6'
+              classes='bg-[#B0E1B7] text-center text-[#008212] h-[33px] 
+              font-semibold w-[106px] rounded mr-6'
             ></Button>
             <Button
               btnText='Delete'
-              onClick={() => dispatch(deleteCustomer(costomerItem.id))}
-              classes='bg-[#EF9999] text-[#D80000] h-[33px] w-[106px] font-semibold rounded'
+              onClick={() => setIsDeleteModal(true)}
+              classes='bg-[#EF9999] text-[#D80000] text-center h-[33px] w-[106px] font-semibold rounded'
             ></Button>
           </div>
         </td>
@@ -54,8 +64,17 @@ const CustomerTableRow = ({ costomerItem, onSubmit }: any) => {
         <ModalForm
           onSubmit={onSubmit}
           onCancel={() => setIsModalOpen(false)}
-          customer={customer}
-          setCustomer={setCustomer}
+          customer={editCustomer}
+          setCustomer={setEditCustomer}
+        />
+      </Modal>
+      <Modal
+        isOpen={isDeleteModal}
+        onClose={() => setIsDeleteModal(false)}
+      >
+        <DeleteModal
+          setIsDeleteModal={setIsDeleteModal}
+          handleDelete={handleDelete}
         />
       </Modal>
     </>
