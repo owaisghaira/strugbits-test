@@ -23,13 +23,6 @@ const ModalForm: React.FC<Props> = ({ onSubmit, onCancel, customer, setCustomer 
     if (customer.id) onCancel();
   };
 
-  useEffect(() => {
-    return () => {
-      setCustomer({})
-    }
-  }, [])
-
-
   return (
     <div className='h-[570px]'>
       <div className='flex relative justify-center'>
