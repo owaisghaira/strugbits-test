@@ -51,6 +51,7 @@ const ModalForm: React.FC<Props> = ({ onSubmit, onCancel, customer, setCustomer 
           <label className="custom-file-input">
             <span className='text-xl text-[#57BC90] font-semibold underline'>Upload Photo</span>
             <input
+              key={customer.avatar ? 'reset-file-input' : 'file-input'}
               type="file"
               accept="image/*"
               onChange={(e) => setCustomer({ ...customer, avatar: e.target?.files && e.target?.files[0] })}
