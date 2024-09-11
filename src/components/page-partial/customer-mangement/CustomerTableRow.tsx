@@ -13,7 +13,7 @@ interface Props {
   onSubmit: (e: any) => void
 }
 
-const CustomerTableRow: React.FC<Props> = ({ costomerItem, onSubmit }) => {
+const CustomerTableRow = ({ costomerItem, onSubmit }: Props) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModal, setIsDeleteModal] = useState(false)

@@ -1,5 +1,3 @@
-// ModalForm.js
-import { useEffect } from 'react';
 import MaskIcon from '../../assets/icons/mask-group.svg';
 import CloseIcon from '../../assets/icons/CloseIcon';
 import { toast } from 'react-toastify';
