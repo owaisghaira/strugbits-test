@@ -7,7 +7,7 @@ interface Props {
   children: any;
 }
 
-const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, children }: Props) => {
   const modalClasses = isOpen ? 'fixed inset-0 flex items-center justify-center' : 'hidden';
   const modalContentClasses = 'bg-white rounded-3xl shadow-lg w-[528px] relative';
   const closeButtonClasses = 'absolute top-0 right-0 m-4 cursor-pointer text-white';
